@@ -1,0 +1,90 @@
+[
+  {
+    "category": "Concepts",
+    "directory": "concepts",
+    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "articles": [
+      {
+        "title": "Overview",
+        "filename": "overview"
+      },
+      {
+        "title": "Features",
+        "filename": "features"
+      },
+      {
+        "title": "Architecture",
+        "filename": "architecture"
+      }
+    ]
+  },
+  {
+    "category": "Setup",
+    "directory": "setup",
+    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "articles": [
+      {
+        "title": "Installation",
+        "filename": "installation"
+      },
+      {
+        "title": "Identity provider",
+        "filename": "identity-provider"
+      },
+      {
+        "title": "Custom theme",
+        "filename": "custom-theme"
+      },
+      {
+        "title": "Demo Keycloak for Testing",
+        "filename": "demo-keycloak"
+      },
+      {
+        "title": "Local K8s cluster",
+        "filename": "local-k8s-cluster"
+      },
+      {
+        "title": "External access",
+        "filename": "external-access"
+      }
+    ]
+  },
+  {
+    "category": "Dataflow Guides",
+    "directory": "dataflow-guides",
+    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "articles": [
+      {
+        "title": "Recovery",
+        "filename": "recovery"
+      },
+      {
+        "title": "Cloud backup",
+        "filename": "cloud-backup"
+      }
+    ]
+  },
+  {
+    "category": "Reference",
+    "directory": "reference",
+    "description":"Optional description, if we'd like to display grid with categories on the docs homepage",
+    "articles": [
+      {
+        "title": "Dataflow CRD",
+        "filename": "dataflow-crd"
+      },
+      {
+        "title": "Platform Helm Chart",
+        "filename": "helm-chart"
+      },
+      {
+        "title": "Waxapi",
+        "url": "waxapi"
+      },
+      {
+        "title": "Waxctl for platform",
+        "filename": "waxctl-for-platform"
+      }
+    ]
+  }
+]
