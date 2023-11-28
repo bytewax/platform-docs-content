@@ -46,6 +46,14 @@
       {
         "title": "External access",
         "filename": "external-access"
+      },
+      {
+        "title": "AWS Marketplace running on EKS",
+        "filename": "aws-marketplace-eks"
+      },
+      {
+        "title": "AWS Marketplace running on any Kubernetes Cluster",
+        "filename": "aws-marketplace-anywhere"
       }
     ]
   },
@@ -78,11 +86,11 @@
         "filename": "helm-chart"
       },
       {
-        "title": "Waxapi",
+        "title": "WaxAPI",
         "url": "waxapi"
       },
       {
-        "title": "Waxctl for platform",
+        "title": "Waxctl for Platform",
         "filename": "waxctl-for-platform"
       }
     ]
