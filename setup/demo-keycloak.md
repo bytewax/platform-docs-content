@@ -1,6 +1,13 @@
-Local k8s cluster using included Keycloak for testing.
+This guide covers installing the Bytewax Platform with a demonstration Keycloak installation.
+
+These instructions can be used to configure the Bytewax Platform for development or demonstration purposes.
+
+**Please note**- the example configuration of Keycloak provided here should be considered **insecure** and not
+intended for use in production.
 
 ## Setup
+
+Before deploying, create a `values.yaml` file with the following contents verbatim:
 
 ```bash
 cat << EOF > ../values.yaml
@@ -14,15 +21,22 @@ demokeycloak:
 EOF
 ```
 
+In order to access the Bytewax Platform using port-forwarding, we'll need to add an entry our hosts file:
+
 ```bash
 echo "127.0.0.1 bytewax-platform-demokeycloak.bytewax-system.svc.cluster.local" >> /etc/hosts
 ```
 
+Now that we have our values configured and our hostname set, we can deploy the platform.
+
 ```bash
-helm upgrade --install bytewax-platform ./* -nbytewax-system -f ../values.yaml
+helm upgrade --install bytewax-platform ./platform -nbytewax-system -f ./values.yaml
 ```
 
-## Running
+## Accessing the cluster
+
+First, we'll need to establish some port forwarding that will allow us to access the cluster
+via the dashboard, and to communicate with it via `waxctl`.
 
 ### Terminal 1
 ```bash
@@ -39,18 +53,20 @@ kubectl port-forward svc/bytewax-platform-demokeycloak 8880
 kubectl port-forward svc/bytewax-platform-dashboard 3000
 ```
 
-Browse http://localhost:3000, use these credentials:
+Connect to http://localhost:3000 in your web browser and use these credentials to log in:
 
 ```
 Username: bytewax
 Password: bytewax
 ```
 
-IMPORTANT: Keycloak will ask you to change the password the first time you log in.
+Keycloak will ask you to change the password the first time you log in.
 
-## When to use this guide
+## Important Notes
 
-This configuration should only be used for trying Bytewax Platform and because you don't have access to an existent IdP. 
+This Keycloak installation is deployed in development mode and isn't storing
+any information in a Persistent Volume on the Kubernetes cluster.
 
-This Keycloak installation is in development mode and also it isn't storing any information in a Persistent Volume on the Kubernetes cluster. That means if the Keycloak container re-starts, the password set to `bytewax` user will be `bytewax` again and Keycloak will ask you to change it again.
+If the Keycloak container re-starts, the password set to `bytewax` user will be
+`bytewax` again and Keycloak will ask you to change it again.
 

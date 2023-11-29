@@ -1,9 +1,10 @@
-The Bytewax Platform allows you to manage and monitor your Dataflows.
+The Bytewax Platform is a framework for deploying and managing Bytewax Dataflows on Kubernetes.
+
 TODO: complete using content from: https://www.bytewax.io/blog/platform
 
 ## How it works
 
-The Platform runs on Kubernetes version 1.22 or superior and it represents the core of the following ecosystem:
+The Bytewax Platform runs on Kubernetes version 1.22 or higher, and is composed of the following components:
 
 diagram showing:
 - client side: 

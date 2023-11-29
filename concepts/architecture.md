@@ -7,13 +7,13 @@ At a high level, the Bytewax Platform consists of these components running on Ku
 - WaxAPI
 - Waxctl
 
-The Operator is a core component running in the Kubernetes cluster. It implements the controller pattern over the Dataflow custom resources deployed on that cluster. That means, each time a Dataflow is created, modified or deleted, the Operator takes the needed actions to make the current state be like the desired state.
+The Operator is a core component running in the Kubernetes cluster. It implements the controller pattern over the Dataflow custom resources deployed on that cluster. Each time a Dataflow is created, modified or deleted, the Operator takes the needed actions to make the current state like the desired state.
 
 The Dashboard allows you to manage your Dataflows visually.
 
-The WaxAPI is responsible for receiving requests from clients and interacting with Kubernetes API.
+The WaxAPI is a RESTful API gateway responsible for receiving requests from clients and interacting with Kubernetes API.
 
-Waxctl is the Bytewax Command Line. It allows you to manage your Dataflows from a terminal.
+Waxctl is the Bytewax CLI. It allows you to manage your Dataflows from the command-line.
 
 ## 10000 foot view
 
@@ -35,5 +35,5 @@ server side:
 
 The Dashboard and WaxAPI are integrated with a third-party OpenID Connect provider to authenticate every request they receive. 
 
-Also, the Bytewax Platform can work with identity providers which implement authorization code flow with Proof Key for Code Exchange (PKCE).
+The Bytewax Platform can work with identity providers which implement authorization code flow with Proof Key for Code Exchange (PKCE).
 
