@@ -1,6 +1,6 @@
 How to prepare your environment before installing Bytewax Platform
 
-# Prerequisites
+## Prerequisites
 
 The Bytewax Platform works as an ecosystem made up of the following components:
 
@@ -13,7 +13,7 @@ The Bytewax Platform works as an ecosystem made up of the following components:
 The Bytewax Platform relies on an Identity Provider that implements the OpenID Connect flow for
 authentication to the Bytewax Dashboard, and to authenticate the deployment of Dataflows with `waxctl`.
 
-To learn more about the Bytewax Platform and the needed IdP configuration, click [here](setup/identity-provider)
+To learn more about the Bytewax Platform and the needed IdP configuration, click [here](/setup/identity-provider)
 
 ## External Access to Kubernetes Cluster
 
@@ -23,7 +23,7 @@ Both the Dashboard and the API need to be able to receive requests from outside 
 to be able to deploy and manage Dataflows.
 
 To configure the Bytewax Platform for external access please refer to the
-documentation [here](setup/external-access).
+documentation [here](/setup/external-access).
 
 ## Default Storage Class
 

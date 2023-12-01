@@ -127,7 +127,7 @@ billing:
 ```
 
 The values.yaml contains additional configuration options that are needed to deploy the Bytewax Platform helm chart.
-To learn more about available configuration options, please check [here](setup/installation).
+To learn more about available configuration options, please check [here](/setup/installation).
 
 
 6. Deploy Bytewax Platform

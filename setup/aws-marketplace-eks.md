@@ -79,7 +79,7 @@ tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
 Create the helm chart values file `values.yaml` with the desired configuration in the same directory of `awsmp-chart` directory.
 These values are optional configuration values to customize the installation of the Bytewax Platform.
 
-To learn more about Bytewax Platform options, click [here](setup/installation).
+To learn more about Bytewax Platform options, click [here](/setup/installation).
 
 5. Deploy the Bytewax Platform
 
