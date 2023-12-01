@@ -1,4 +1,4 @@
-The Bytewax Platform architecture is based on the [Kubernetes controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/) applied to the [Dataflow Custom Resource](reference/dataflow-crd).
+The Bytewax Platform architecture is based on the [Kubernetes controller pattern](https://kubernetes.io/docs/concepts/architecture/controller/) applied to the [Dataflow Custom Resource](/reference/dataflow-crd).
 
 At a high level, the Bytewax Platform consists of these components running on Kubernetes:
 
@@ -36,18 +36,27 @@ Waxctl is the Bytewax CLI. It allows you to manage your Dataflows from the comma
 
 ## 10000 foot view
 
-diagram showing:
-left side:
-  - Browser
-  - Waxctl
-server side:
-  (k8s cluster)
-  - Dashboard app |
-  - WaxAPI app    | --> Bytewax Platform
-  - Operator app  |
-  - Dataflows
-  (cloud)
-  - IDP
+```mermaid
+graph LR;
+  client([user])-.waxctl on terminal.->service[Bytewax<br>Platform];
+  client <--> Dashboard
+  Dashboard <--> service
+  idp(Identity<br>Provider) <--> |OpenID Connect<br>flow|service;
+  idp <--> |OpenID Connect<br>flow|Dashboard
+  pod1 --> |traces|otel(OpenTelemetry);
+  pod1 --> |recovery<br>snapshots|bucket(S3);
+  subgraph Kubernetes cluster
+  service-->pod1[Dataflow<br>stack];
+  end
+  classDef plain fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
+  classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  classDef bw fill:#fab90f,stroke:#fff,stroke-width:2px,color:#fff;
+  class ingress,pod1 k8s;
+  class client plain;
+  class cluster cluster;
+  class service,Dashboard bw;
+```
 
 
 ## Open ID Connect Integration

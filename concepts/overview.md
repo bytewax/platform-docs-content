@@ -2,16 +2,27 @@ The Bytewax Platform is a framework for deploying and managing Bytewax Dataflows
 
 The Platform can be deployed on a Kubernetes cluster running version 1.22 or higher, and is composed of the following components:
 
-diagram showing:
-- client side: 
-    user -> waxctl, dashboard UI
-    app  -> waxapi
-- server side:
-    identity provider (OIDC)
-    bytewax platform                                       |
-    dataflows                                              | --> k8s cluster
-    o11y: otel collector + prometheus + jaeger + grafana   |
-    Disaster Recovery: S3
+```mermaid
+graph LR;
+  client([user])-.waxctl on terminal.->service[Bytewax<br>Platform];
+  client <--> Dashboard
+  Dashboard <--> service
+  idp(Identity<br>Provider) <--> |OpenID Connect<br>flow|service;
+  idp <--> |OpenID Connect<br>flow|Dashboard
+  pod1 --> |traces|otel(OpenTelemetry);
+  pod1 --> |recovery<br>snapshots|bucket(S3);
+  subgraph Kubernetes cluster
+  service-->pod1[Dataflow<br>stack];
+  end
+  classDef plain fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
+  classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
+  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  classDef bw fill:#fab90f,stroke:#fff,stroke-width:2px,color:#fff;
+  class ingress,pod1 k8s;
+  class client plain;
+  class cluster cluster;
+  class service,Dashboard bw;
+```
 
 ## Feature Overview
 
@@ -25,7 +36,7 @@ can be monitored, stopped and started from the UI.
 ### Deployment
 
 CI/CD Integration and deployment tooling using `waxctl`, a command line tool for managing dataflows.
-For more information about waxctl, see the documentation [here](reference/waxctl-for-platform).
+For more information about waxctl, see the documentation [here](/reference/waxctl-for-platform).
 
 ### Metrics, monitoring and Tracing
 
