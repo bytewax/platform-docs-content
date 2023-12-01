@@ -9,10 +9,6 @@
         "filename": "overview"
       },
       {
-        "title": "Features",
-        "filename": "features"
-      },
-      {
         "title": "Architecture",
         "filename": "architecture"
       }
