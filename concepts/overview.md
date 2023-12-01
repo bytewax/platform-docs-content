@@ -4,24 +4,28 @@ The Platform can be deployed on a Kubernetes cluster running version 1.22 or hig
 
 ```mermaid
 graph LR;
-  client([user])-.waxctl on terminal.->service[Bytewax<br>Platform];
-  client <--> Dashboard
-  Dashboard <--> service
-  idp(Identity<br>Provider) <--> |OpenID Connect<br>flow|service;
-  idp <--> |OpenID Connect<br>flow|Dashboard
-  pod1 --> |traces|otel(OpenTelemetry);
-  pod1 --> |recovery<br>snapshots|bucket(S3);
-  subgraph Kubernetes cluster
-  service-->pod1[Dataflow<br>stack];
+  client1([user])-->waxctl
+  client1 --> dashboard
+  k8sapi[k8s API]
+  subgraph Bytewax Platform;
+  dashboard(Dashboard)
+  waxctl(Waxctl)
+  waxapi[WaxAPI]
+  operator[Operator]
   end
+  waxctl --> k8sapi;
+  waxapi--> k8sapi
+  dashboard --> waxapi
+  operator --> k8sapi
+  k8sapi --> dataflow(Dataflow<br>Stack)
   classDef plain fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
   classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
-  classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
+  classDef cluster fill:#fff,stroke:#fab90f,stroke-width:2px,color:#000;
   classDef bw fill:#fab90f,stroke:#fff,stroke-width:2px,color:#fff;
-  class ingress,pod1 k8s;
-  class client plain;
+  class ingress,k8sapi,dataflow k8s;
+  class client1,client2 plain;
   class cluster cluster;
-  class service,Dashboard bw;
+  class dashboard,waxapi,waxctl,operator bw;
 ```
 
 ## Feature Overview

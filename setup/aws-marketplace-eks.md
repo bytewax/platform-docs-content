@@ -23,7 +23,7 @@ enabled for your AWS account.
 1. Enable an IAM OIDC provider
 
 Your Amazon EKS cluster needs to have an IAM OIDC provider enabled to set up IAM Roles for Service Accounts (IRSA). For guidance on setting up an IAM OIDC provider, see the 
-AWS [documentation](https://aws.amazon.com/blogs/opensource/introducing-fine-grained-iam-roles-service-accounts/) for an example of assosciating an IAM OIDC with your cluster.
+AWS [documentation](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html) for an example of assosciating an IAM OIDC with your cluster.
 
 2. Create the Bytewax Platform namespace in your Kubernetes cluster:
 

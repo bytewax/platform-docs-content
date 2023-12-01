@@ -34,28 +34,41 @@ The WaxAPI is a RESTful API gateway responsible for receiving requests from clie
 
 Waxctl is the Bytewax CLI. It allows you to manage your Dataflows from the command-line.
 
-## 10000 foot view
+## The Bytewax Platform Ecosystem
 
 ```mermaid
 graph LR;
-  client([user])-.waxctl on terminal.->service[Bytewax<br>Platform];
-  client <--> Dashboard
-  Dashboard <--> service
+  client([user])
+  waxctl[Waxctl]
+  client-.terminal.->waxctl;
+  waxctl --> k8sapi;
+  client --> dashboard
+  dashboard --> service
   idp(Identity<br>Provider) <--> |OpenID Connect<br>flow|service;
-  idp <--> |OpenID Connect<br>flow|Dashboard
-  pod1 --> |traces|otel(OpenTelemetry);
-  pod1 --> |recovery<br>snapshots|bucket(S3);
+  idp <--> |OpenID Connect<br>flow|dashboard
+  pod1 --> |metrics|prom[(Prometheus)];
+  pod1 --> |traces|otel[(OpenTelemetry)];
+  pod1 --> |recovery<br>snapshots|bucket[(S3)];
   subgraph Kubernetes cluster
-  service-->pod1[Dataflow<br>stack];
+  k8sapi[kubeAPI]
+  pod1[Dataflow<br>stack]
+  subgraph Bytewax Platform
+  operator[Operator]
+  service[WaxAPI]
+  dashboard[Dashboard]
+  end
+  service --> k8sapi
+  operator --> k8sapi
+  k8sapi-->pod1;
   end
   classDef plain fill:#ddd,stroke:#fff,stroke-width:4px,color:#000;
   classDef k8s fill:#326ce5,stroke:#fff,stroke-width:4px,color:#fff;
   classDef cluster fill:#fff,stroke:#bbb,stroke-width:2px,color:#326ce5;
   classDef bw fill:#fab90f,stroke:#fff,stroke-width:2px,color:#fff;
-  class ingress,pod1 k8s;
+  class ingress,pod1,k8sapi k8s;
   class client plain;
   class cluster cluster;
-  class service,Dashboard bw;
+  class service,dashboard,operator,waxctl bw;
 ```
 
 
