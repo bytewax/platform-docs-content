@@ -1,6 +1,6 @@
-This guide will walk you through how to configure and test running a dataflow with cloud recovery. To do so we will start with an AWS kubernetes cluster and then migrate the same dataflow to a Gooogle Cloud Kubernetes cluster. Having an account a cluster in each is a prerequisite for trying this.
+This guide will walk you through how to configure and test running a dataflow with cloud recovery. To do so we will start with an AWS kubernetes cluster and then migrate the same dataflow to a Gooogle Cloud Kubernetes cluster. Having an account with a cluster in each is a prerequisite for trying this.
 
-Cloud recovery is a capability that allows the state persisted in the local worker to be written to object storage like s3. In the event of a node dying, you will be able to recover dataflows from this bucket. This can also aid in Kubernetes cluster migration without the loss of state.
+Cloud recovery is a capability that allows the state persisted in the local worker to be written to object storage like s3. In the event of a node dying, the cluster going down or some other catastrophic failure, you will be able to recover dataflows from this bucket. This can also aid in Kubernetes cluster migration without the loss of state.
 
 ## Steps
 
