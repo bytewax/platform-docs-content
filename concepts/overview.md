@@ -1,4 +1,4 @@
-The Bytewax Platform is a set of tools and capabilities for deploying and managing Bytewax Dataflows. Covering things like authentication, observability, disaster recovery and collaboration within or across teams. It was designed to off-load the operational capabilities generally required as you scale your usage of Bytewax in critical workloads.
+The Bytewax Platform is a set of tools and capabilities for deploying and managing Bytewax Dataflows. The Platform provides capabilities like authentication, observability, disaster recovery and collaboration within or across teams. It was designed to off-load the operational capabilities generally required as you scale your usage of Bytewax in critical workloads.
 
 The Bytewax Platform is cloud native and leverages Kubernetes to provide a number of features. It can be deployed on any Kubernetes cluster running version 1.22 or higher. The Platform is composed of the following components:
 
