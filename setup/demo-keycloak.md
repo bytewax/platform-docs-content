@@ -1,9 +1,6 @@
-This guide covers installing the Bytewax Platform with a demonstration Keycloak installation.
+These setup instructions cover how to install the Bytewax Platform with a demonstration Keycloak installation. These instructions should only be used to configure the Bytewax Platform for development or demonstration purposes.
 
-These instructions can be used to configure the Bytewax Platform for development or demonstration purposes.
-
-**Please note**- the example configuration of Keycloak provided here should be considered **insecure** and not
-intended for use in production.
+**Please note**- the example configuration of Keycloak provided here should be considered **insecure** and **NOT INTENDED** for use in production.
 
 ## Setup
 

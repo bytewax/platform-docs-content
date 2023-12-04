@@ -1,6 +1,6 @@
-This guide covers the basic process of installing the Bytewax Platform on Amazon EKS Anywhere.
+This guide covers the basic process of installing the Bytewax Platform on Amazon EKS Anywhere, which allows you to purchase a license through amazon, but then run the cluster anywhere. If you are looking to run The Platform on amazon EKS in the AWS cloud, you should follow the [AWS Marketplace running on EKS Documentation](./aws-marketplace-eks).
 
-You must have purchased a subcription for the Bytewax Platform in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-heqksqasqoy66)
+You must have purchased a subscription for the Bytewax Platform in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-heqksqasqoy66)
 otherwise the automation from this setup will fail with a missing entitlement error.
 
 ## Pre-requisites
@@ -13,7 +13,7 @@ To install the Bytewax Platform, you'll need to have the following tools install
 
 ## Steps
 
-1. Set environment variables with values obtained from AWS Marketplace subscription wizard:
+1. Set local environment variables with the values obtained from the AWS Marketplace subscription wizard:
 
 ```bash
 AWSMP_TOKEN=<CREATED_TOKEN_ABOVE>
@@ -21,6 +21,8 @@ AWSMP_ROLE_ARN=<CREATED_ROLE_ABOVE>
 ```
 
 2. Create the Bytewax Platform namespace in your Kubernetes cluster:
+
+**_This naming convention will be used throughout, if you modify it, you will need to modify many of the commands in order for things to work_**
 
 ```bash
 kubectl create namespace bytewax-system
@@ -37,7 +39,7 @@ kubectl create secret generic awsmp-license-token-secret \
 
 4. Create the Kubernetes secret needed to pull Bytewax Platform docker images.
 
-You need an authenticated session with AWS in your terminal to run the following `awscli` steps.
+**You need an authenticated session with AWS in your terminal to run the following `awscli` steps.**
 
 First, let's retrieve our AWS License manager access token.
 
@@ -110,7 +112,8 @@ Now that we're authenticated, we can download the chart with `helm pull`.
 helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/platform --version 0.1.5
 ```
 
-Unzip the downloaded helm chart archive with the following command:
+Extract the downloaded helm chart archive with the following command:
+_If you do not have tar available, you will have to use another method to extract and the delete the compressed directory_
 
 ```bash
 tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
@@ -129,12 +132,13 @@ billing:
 The values.yaml contains additional configuration options that are needed to deploy the Bytewax Platform helm chart.
 To learn more about available configuration options, please check [here](/setup/installation).
 
-
 6. Deploy Bytewax Platform
 
 Now that we've configured our helm chart installation, we can proceed with installing it. This
 command should be run from the `awsmp-chart` directory.
 
 ```bash
-$ helm upgrade --install bytewax-platform ./platform -nbytewax-system -f ./values.yaml
+helm upgrade --install bytewax-platform ./platform -n bytewax-system -f ./values.yaml
 ```
+
+If you have issues with the helm chart installation, double check that your AWS access is configured correctly.

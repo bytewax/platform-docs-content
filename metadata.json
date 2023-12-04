@@ -22,7 +22,7 @@
     "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
     "articles": [
       {
-        "title": "Installation",
+        "title": "Preparing for Installation",
         "filename": "installation"
       },
       {
@@ -46,11 +46,11 @@
         "filename": "external-access"
       },
       {
-        "title": "AWS Marketplace running on EKS",
+        "title": "AWS Marketplace Installation Running on EKS",
         "filename": "aws-marketplace-eks"
       },
       {
-        "title": "AWS Marketplace running on any Kubernetes Cluster",
+        "title": "AWS Marketplace Installation Running on any Kubernetes Cluster",
         "filename": "aws-marketplace-anywhere"
       }
     ]
