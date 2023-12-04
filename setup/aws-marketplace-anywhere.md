@@ -1,4 +1,4 @@
-This guide covers the basic process of installing the Bytewax Platform on Amazon EKS Anywhere, which allows you to purchase a license through amazon, but then run the cluster anywhere. If you are looking to run The Platform on amazon EKS in the AWS cloud, you should follow the [AWS Marketplace running on EKS Documentation](./aws-marketplace-eks).
+This guide covers the basic process of installing the Bytewax Platform on Amazon EKS Anywhere, which allows you to purchase a license through Amazon, and run the Platform on any Kubernetes cluster. If you are looking to run The Platform on Amazon EKS, please see the [AWS Marketplace running on EKS Documentation](./aws-marketplace-eks).
 
 You must have purchased a subscription for the Bytewax Platform in the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-heqksqasqoy66)
 otherwise the automation from this setup will fail with a missing entitlement error.
