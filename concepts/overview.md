@@ -1,6 +1,6 @@
-The Bytewax Platform is a framework for deploying and managing Bytewax Dataflows on Kubernetes.
+The Bytewax Platform is a set of tools and capabilities for deploying and managing Bytewax Dataflows. The Platform provides capabilities like authentication, observability, disaster recovery and collaboration within or across teams. It was designed to off-load the operational capabilities generally required as you scale your usage of Bytewax in critical workloads.
 
-The Platform can be deployed on a Kubernetes cluster running version 1.22 or higher, and is composed of the following components:
+The Bytewax Platform is cloud native and leverages Kubernetes to provide a number of features. It can be deployed on any Kubernetes cluster running version 1.22 or higher. The Platform is composed of the following components:
 
 ```mermaid
 graph LR;
@@ -30,7 +30,7 @@ graph LR;
 
 ## Feature Overview
 
-The following section is an overview of the features offered by the Bytewax Platform.
+The following section is an overview of the features currently offered as part of the Bytewax Platform.
 
 ### Management UI
 
@@ -47,7 +47,7 @@ For more information about waxctl, see the documentation [here](/reference/waxct
 Bytewax Dataflows can be deployed with [OpenTelemetry](https://opentelemetry.io/) metrics and tracing,
 which can be integrated with distributed tracing platforms like [Jaeger](https://www.jaegertracing.io/).
 
-Bytewax Dataflows collect detailed metrics and exposes a [Prometheus](https://prometheus.io/) metrics collection
+Bytewax Dataflows collect detailed metrics and expose a [Prometheus](https://prometheus.io/) metrics collection
 endpoint.
 
 ### Use your existing stack: Built-on K8s and leverages common open source projects
@@ -67,7 +67,6 @@ workers in a Dataflow.
 ### Customizable and extensible
 
 The Bytewax Platform is designed to be extensible through the Platform API, to enable integration
-with existing systems for management and programatic deploys of dataflows.
+with existing systems for management and programmatic deployment of dataflows.
 
-The Bytewax Platform UI can be customized or to match your brand identity.
-
+The Bytewax Platform UI can be customized to match your brand identity.
