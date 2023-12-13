@@ -11,6 +11,36 @@ The website looks for releases of this repository and shows the content of the s
 
 The content of these files is intended to be generated automatically. This section describes the steps for each.
 
+### Dataflow Custom Resource Definition
+
+Steps:
+
+1. Define these variables:
+
+```bash
+export waxctl_repo_path=<ABSOLUTE PATH OF WAXCTL REPOSITORY DIRECTORY>
+export content_path=<ABSOLUTE PATH OF PLATFORM CONTENT REPOSITORY DIRECTORY>
+```
+
+For example:
+
+```bash
+export waxctl_repo_path=/home/jdoe/repos/waxctl
+export content_path=/home/jdoe/repos/platform-docs-content
+```
+
+2. Run this command to update the file `reference/dataflow-crd.md`
+
+```bash
+docker run -u $(id -u):$(id -g) --rm \
+  -v $waxctl_repo_path:/workdir \
+  -v $content_path/reference:/reference \
+  ghcr.io/fybrik/crdoc:latest \
+  --resources /workdir/operator/config/crd/bases \
+  --output /reference/dataflow-crd.md \
+  --template /reference/markdown.tmpl
+```
+
 ### Helm Chart
 
 Steps:
