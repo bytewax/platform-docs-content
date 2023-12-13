@@ -1,0 +1,91 @@
+The following table shows the available configuration of the Bytewax Platform Helm Chart.
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| billing.awsMarketplace.enabled | bool | `true` |  |
+| controllerManager.kubeRbacProxy.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.kubeRbacProxy.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/kube-rbac-proxy"` |  |
+| controllerManager.kubeRbacProxy.image.tag | string | `"v0.13.0"` |  |
+| controllerManager.kubeRbacProxy.resources.limits.cpu | string | `"500m"` |  |
+| controllerManager.kubeRbacProxy.resources.limits.memory | string | `"128Mi"` |  |
+| controllerManager.kubeRbacProxy.resources.requests.cpu | string | `"5m"` |  |
+| controllerManager.kubeRbacProxy.resources.requests.memory | string | `"64Mi"` |  |
+| controllerManager.manager.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.manager.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/operator"` |  |
+| controllerManager.manager.image.tag | string | `"0.3.5"` |  |
+| controllerManager.manager.logLevel | string | `"info"` |  |
+| controllerManager.manager.resources.limits.cpu | string | `"500m"` |  |
+| controllerManager.manager.resources.limits.memory | string | `"128Mi"` |  |
+| controllerManager.manager.resources.requests.cpu | string | `"10m"` |  |
+| controllerManager.manager.resources.requests.memory | string | `"64Mi"` |  |
+| controllerManager.replicas | int | `1` |  |
+| dashboard.affinity | object | `{}` |  |
+| dashboard.annotations | object | `{}` |  |
+| dashboard.apiUrl | string | `"http://localhost:8080/"` |  |
+| dashboard.baseUrl | string | `"http://localhost:3000/"` |  |
+| dashboard.faviconUrl | string | `"/favicon.ico"` |  |
+| dashboard.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| dashboard.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/dashboard"` |  |
+| dashboard.image.tag | string | `"0.1.15"` |  |
+| dashboard.ingress.annotations | object | `{}` |  |
+| dashboard.ingress.enabled | bool | `false` |  |
+| dashboard.ingress.labels | object | `{}` |  |
+| dashboard.labels | object | `{}` |  |
+| dashboard.nodeSelector | object | `{}` |  |
+| dashboard.oidc | object | `{"clientId":"","clientIdKey":"","clientSecret":"","clientSecretKey":"","existingSecret":"","pkce":false}` | Exclusive OpenID Connect configuration for Dashboard, if not set, Dashboard will use global oidc settings |
+| dashboard.oidc.pkce | bool | `false` | if true, the dashboard will not have set clientSecret and it will use PKCE |
+| dashboard.podAnnotations | object | `{}` |  |
+| dashboard.podLabels | object | `{}` |  |
+| dashboard.replicas | int | `1` |  |
+| dashboard.resources.limits.cpu | string | `"500m"` |  |
+| dashboard.resources.limits.memory | string | `"512Mi"` |  |
+| dashboard.resources.requests.cpu | string | `"100m"` |  |
+| dashboard.resources.requests.memory | string | `"128Mi"` |  |
+| dashboard.service.annotations | object | `{}` |  |
+| dashboard.service.labels | object | `{}` |  |
+| dashboard.service.loadBalancerSourceRanges | list | `[]` |  |
+| dashboard.service.port | int | `3000` |  |
+| dashboard.service.type | string | `"ClusterIP"` |  |
+| dashboard.themeUrl | string | `"/"` |  |
+| dashboard.title | string | `"Bytewax"` |  |
+| dashboard.tolerations | list | `[]` |  |
+| dashboard.topologySpreadConstraints | list | `[]` |  |
+| demokeycloak.enabled | bool | `false` | Keycloak installation to test the Bytewax Platform |
+| demokeycloak.keycloak.keycloak.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/keycloak"` |  |
+| demokeycloak.keycloak.keycloak.image.tag | string | `"20.0.1"` |  |
+| fullnameOverride | string | `"bytewax-platform"` |  |
+| kubernetesClusterDomain | string | `"cluster.local"` |  |
+| metricsService.ports[0].name | string | `"https"` |  |
+| metricsService.ports[0].port | int | `8443` |  |
+| metricsService.ports[0].protocol | string | `"TCP"` |  |
+| metricsService.ports[0].targetPort | string | `"https"` |  |
+| metricsService.type | string | `"ClusterIP"` |  |
+| oidc | object | `{"authIssuer":"https://identiyprovider.com/realms/bytewax","authIssuerKey":"","clientId":"clientid","clientIdKey":"","clientSecret":"clientsecret","clientSecretKey":"","existingSecret":""}` | Global Open ID Connect configuration |
+| waxapi.affinity | object | `{}` |  |
+| waxapi.allowedHosts | string | `"*"` |  |
+| waxapi.annotations | object | `{}` |  |
+| waxapi.image.imagePullPolicy | string | `"IfNotPresent"` |  |
+| waxapi.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/waxapi-ecr"` |  |
+| waxapi.image.tag | string | `"0.1.56"` |  |
+| waxapi.ingress.annotations | object | `{}` |  |
+| waxapi.ingress.enabled | bool | `false` |  |
+| waxapi.ingress.labels | object | `{}` |  |
+| waxapi.labels | object | `{}` |  |
+| waxapi.nodeSelector | object | `{}` |  |
+| waxapi.podAnnotations | object | `{}` |  |
+| waxapi.podLabels | object | `{}` |  |
+| waxapi.port | int | `8080` |  |
+| waxapi.replicas | int | `1` |  |
+| waxapi.resources.limits.cpu | string | `"500m"` |  |
+| waxapi.resources.limits.memory | string | `"512Mi"` |  |
+| waxapi.resources.requests.cpu | string | `"100m"` |  |
+| waxapi.resources.requests.memory | string | `"128Mi"` |  |
+| waxapi.service.annotations | object | `{}` |  |
+| waxapi.service.labels | object | `{}` |  |
+| waxapi.service.loadBalancerSourceRanges | list | `[]` |  |
+| waxapi.service.port | int | `8080` |  |
+| waxapi.service.type | string | `"ClusterIP"` |  |
+| waxapi.service.type | string | `"ClusterIP"` |  |
+| waxapi.tolerations | list | `[]` |  |
+| waxapi.topologySpreadConstraints | list | `[]` |  |
+
