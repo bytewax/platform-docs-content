@@ -1,8 +1,21 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is the Bytewax Platform API",
+        "title": "WaxAPI",
+        "termsOfService": "https://bytewax.io/terms-of-use",
+        "contact": {
+            "name": "Bytewax Platform Support",
+            "url": "https://bytewax.io/contact-us",
+            "email": "support@bytewax.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.0.1"
     },
+    "host": "waxapi.bytewax.io:443",
     "paths": {
         "/dataflows": {
             "get": {
