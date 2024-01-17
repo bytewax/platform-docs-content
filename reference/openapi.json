@@ -1,11 +1,25 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is the Bytewax Platform API",
+        "title": "WaxAPI",
+        "termsOfService": "https://bytewax.io/terms-of-use",
+        "contact": {
+            "name": "Bytewax Platform Support",
+            "url": "https://bytewax.io/contact-us",
+            "email": "support@bytewax.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.0.1"
     },
+    "host": "waxapi.bytewax.io:443",
     "paths": {
         "/dataflows": {
             "get": {
+                "description": "get all dataflows",
                 "produces": [
                     "application/json"
                 ],
@@ -18,14 +32,262 @@
                         "name": "Authorization",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
+                            "$ref": "#/definitions/views.DataflowList"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}": {
+            "get": {
+                "description": "get dataflow by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get dataflow by name",
+                "operationId": "get-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/views.DataflowDetails"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}/logs": {
+            "get": {
+                "description": "get dataflow logs by pod",
+                "summary": "get dataflow logs by pod",
+                "operationId": "get-dataflow-logs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pod Name",
+                        "name": "pod_name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
                             "type": "string"
                         }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}/pods": {
+            "get": {
+                "description": "get dataflow pods by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get dataflow pods by name",
+                "operationId": "get-dataflow-pods",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.PodList"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "k8s.CloudBackup": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "s3Url": {
+                    "type": "string"
+                }
+            }
+        },
+        "k8s.Dataflow": {
+            "type": "object",
+            "properties": {
+                "containerImage": {
+                    "type": "string"
+                },
+                "containerImagePullPolicy": {
+                    "type": "string"
+                },
+                "containerImagePullSecret": {
+                    "type": "string"
+                },
+                "creationTimestamp": {
+                    "type": "string"
+                },
+                "kubernetesWorkloadType": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "platform": {
+                    "$ref": "#/definitions/k8s.Platform"
+                },
+                "processes": {
+                    "type": "string"
+                },
+                "processesReady": {
+                    "type": "string"
+                },
+                "pythonScriptFile": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "workersPerProcess": {
+                    "type": "string"
+                }
+            }
+        },
+        "k8s.Platform": {
+            "type": "object",
+            "properties": {
+                "recovery": {
+                    "$ref": "#/definitions/k8s.Recovery"
+                }
+            }
+        },
+        "k8s.Recovery": {
+            "type": "object",
+            "properties": {
+                "cloudBackup": {
+                    "$ref": "#/definitions/k8s.CloudBackup"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "parts": {
+                    "type": "integer"
+                }
+            }
+        },
+        "views.DataflowDetails": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/k8s.Dataflow"
+                },
+                "details": {
+                    "type": "string"
+                }
+            }
+        },
+        "views.DataflowList": {
+            "type": "object",
+            "properties": {
+                "flows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/k8s.Dataflow"
+                    }
+                }
+            }
+        },
+        "views.PodList": {
+            "type": "object",
+            "properties": {
+                "pods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
                     }
                 }
             }
