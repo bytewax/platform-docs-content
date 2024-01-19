@@ -15,7 +15,7 @@
         },
         "version": "0.1.56"
     },
-    "host": "waxapi.bytewax.io:443",
+    "host": "waxapi.lab.bytewax.io:443",
     "paths": {
         "/dataflows": {
             "get": {
