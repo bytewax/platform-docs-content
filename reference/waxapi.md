@@ -9,7 +9,7 @@ Every call must include the `Authorization` header. The value of the header shou
 This is an example of a request to WaxAPI:
 
 ```bash
-curl http://waxapi.yourcompany.com/dataflows/
+curl https://waxapi.yourcompany.com/dataflows/
 -H "Authorization: Bearer <TOKEN>"
 ```
 
@@ -17,9 +17,11 @@ curl http://waxapi.yourcompany.com/dataflows/
 
 WaxAPI uses conventional HTTP status codes to indicate the success or failure of an API request.
 
-Codes in the `2xx` range indicate success
-Codes in the `4xx` range indicate an error caused by the client request
-Codes in the `5xx` range indicate an error inside WaxAPI
+| Code Range | Description |
+|------------|-------------|
+| Codes in the `2xx` range | Indicate success |
+| Codes in the `4xx` range | Indicate an error caused by the client request |
+| Codes in the `5xx` range | Indicate an error inside WaxAPI |
 
 ## OpenAPI
 
