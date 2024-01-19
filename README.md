@@ -55,3 +55,6 @@ docker run --rm --volume "$(pwd):/helm-docs" -u $(id -u) jnorwood/helm-docs:late
 
 3. Replace the md table in `reference\helm-chart.md` 
 
+### WaxAPI
+
+To update the `resources/openapi.json` file, follow the instructions of the `OpenAPI` section in the WaxAPI [README.md](https://github.com/bytewax/waxctl/blob/main/cmd/web/README.md#OpenAPI)

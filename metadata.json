@@ -3,7 +3,7 @@
     "category": "Concepts",
     "directory": "concepts",
     "icon": "carbon:reference-architecture",
-    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "description": "Learn about the different parts of the Bytewax Platform and the abstractions it uses.",
     "articles": [
       {
         "title": "Overview",
@@ -19,7 +19,7 @@
     "category": "Setup",
     "directory": "setup",
     "icon": "carbon:ibm-secure-infrastructure-on-vpc-for-regulated-industries",
-    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "description": "Instructions for installing the Bytewax Platform on Kubernetes.",
     "articles": [
       {
         "title": "Preparing for Installation",
@@ -59,7 +59,7 @@
     "category": "Dataflow Guides",
     "directory": "dataflow-guides",
     "icon": "carbon:flow-data",
-    "description": "Optional description, if we'd like to display grid with categories on the docs homepage",
+    "description": "Guides and examples of Dataflows running on the Bytewax Platform.",
     "articles": [
       {
         "title": "Recovery",
@@ -75,7 +75,7 @@
     "category": "Reference",
     "directory": "reference",
     "icon": "carbon:code-reference",
-    "description":"Optional description, if we'd like to display grid with categories on the docs homepage",
+    "description":"Detailed authoritative reference material such as command-line options, configuration options, and API calling parameters.",
     "articles": [
       {
         "title": "Dataflow CRD",
