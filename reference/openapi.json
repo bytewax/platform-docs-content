@@ -13,9 +13,8 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "0.1.56"
+        "version": "0.2.0"
     },
-    "host": "waxapi.lab.bytewax.io:443",
     "paths": {
         "/dataflows": {
             "get": {
@@ -45,6 +44,43 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/views.DataflowList"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create dataflow",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create dataflow",
+                "operationId": "create-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Dataflow Data",
+                        "name": "specs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.DataflowDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -88,6 +124,91 @@
                         "description": "ok",
                         "schema": {
                             "$ref": "#/definitions/views.DataflowDetails"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update dataflow",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update dataflow",
+                "operationId": "update-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Dataflow Data",
+                        "name": "specs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.DataflowDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete dataflow by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete dataflow by name",
+                "operationId": "delete-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -259,6 +380,154 @@
                 }
             }
         },
+        "v1alpha1.CloudBackup": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
+                },
+                "s3": {
+                    "$ref": "#/definitions/v1alpha1.S3"
+                }
+            }
+        },
+        "v1alpha1.DataflowSpec": {
+            "type": "object",
+            "properties": {
+                "chartValues": {
+                    "type": "string"
+                },
+                "configMapName": {
+                    "type": "string"
+                },
+                "env": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/v1alpha1.EnvVar"
+                    }
+                },
+                "image": {
+                    "$ref": "#/definitions/v1alpha1.Image"
+                },
+                "jobMode": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
+                },
+                "keepAlive": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
+                },
+                "processesCount": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "type": "integer"
+                },
+                "pythonFileName": {
+                    "type": "string"
+                },
+                "recovery": {
+                    "$ref": "#/definitions/v1alpha1.Recovery"
+                },
+                "tarName": {
+                    "description": "+kubebuilder:validation:Optional",
+                    "type": "string"
+                },
+                "workersPerProcess": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "type": "integer"
+                }
+            }
+        },
+        "v1alpha1.EnvVar": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1alpha1.Image": {
+            "type": "object",
+            "properties": {
+                "pullPolicy": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"Always\"",
+                    "type": "string"
+                },
+                "pullSecret": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"default-credentials\"",
+                    "type": "string"
+                },
+                "repository": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1alpha1.Persistence": {
+            "type": "object",
+            "properties": {
+                "size": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"10Gi\"",
+                    "type": "string"
+                },
+                "storageClassName": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1alpha1.Recovery": {
+            "type": "object",
+            "properties": {
+                "backupInterval": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "type": "integer"
+                },
+                "cloudBackup": {
+                    "$ref": "#/definitions/v1alpha1.CloudBackup"
+                },
+                "enabled": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
+                },
+                "partsCount": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "type": "integer"
+                },
+                "persistence": {
+                    "$ref": "#/definitions/v1alpha1.Persistence"
+                },
+                "singleVolume": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
+                },
+                "snapshotInterval": {
+                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "type": "integer"
+                }
+            }
+        },
+        "v1alpha1.S3": {
+            "type": "object",
+            "properties": {
+                "accessKeyId": {
+                    "type": "string"
+                },
+                "secretAccessKey": {
+                    "type": "string"
+                },
+                "secretName": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "views.DataflowDetails": {
             "type": "object",
             "properties": {
@@ -267,6 +536,26 @@
                 },
                 "details": {
                     "type": "string"
+                }
+            }
+        },
+        "views.DataflowDto": {
+            "type": "object",
+            "properties": {
+                "fileContent": {
+                    "type": "string"
+                },
+                "fileUrl": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "spec": {
+                    "$ref": "#/definitions/v1alpha1.DataflowSpec"
                 }
             }
         },
