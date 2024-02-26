@@ -12,7 +12,7 @@ The following table shows the available configuration of the Bytewax Platform He
 | controllerManager.kubeRbacProxy.resources.requests.memory | string | `"64Mi"` |  |
 | controllerManager.manager.image.imagePullPolicy | string | `"IfNotPresent"` |  |
 | controllerManager.manager.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/operator"` |  |
-| controllerManager.manager.image.tag | string | `"0.3.5"` |  |
+| controllerManager.manager.image.tag | string | `"0.3.6"` |  |
 | controllerManager.manager.logLevel | string | `"info"` |  |
 | controllerManager.manager.resources.limits.cpu | string | `"500m"` |  |
 | controllerManager.manager.resources.limits.memory | string | `"128Mi"` |  |
@@ -26,7 +26,7 @@ The following table shows the available configuration of the Bytewax Platform He
 | dashboard.faviconUrl | string | `"/favicon.ico"` |  |
 | dashboard.image.imagePullPolicy | string | `"IfNotPresent"` |  |
 | dashboard.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/dashboard"` |  |
-| dashboard.image.tag | string | `"0.1.15"` |  |
+| dashboard.image.tag | string | `"0.1.16"` |  |
 | dashboard.ingress.annotations | object | `{}` |  |
 | dashboard.ingress.enabled | bool | `false` |  |
 | dashboard.ingress.labels | object | `{}` |  |
@@ -66,7 +66,7 @@ The following table shows the available configuration of the Bytewax Platform He
 | waxapi.annotations | object | `{}` |  |
 | waxapi.image.imagePullPolicy | string | `"IfNotPresent"` |  |
 | waxapi.image.repository | string | `"709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/waxapi-ecr"` |  |
-| waxapi.image.tag | string | `"0.1.56"` |  |
+| waxapi.image.tag | string | `"0.2.0"` |  |
 | waxapi.ingress.annotations | object | `{}` |  |
 | waxapi.ingress.enabled | bool | `false` |  |
 | waxapi.ingress.labels | object | `{}` |  |
