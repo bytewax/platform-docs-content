@@ -29,5 +29,5 @@ WaxAPI exposes a Swagger UI (OpenAPI v2) on `/swagger/index.html` and a full spe
 
 So, if you have the Bytewax Platform installed, you should check any of those resources to know the details about WaxAPI.
 
-We also expose in the Bytewax Platform documentation the same JSON file mentioned [here](/api/openapi/v0.1.5).
+We also expose in the Bytewax Platform documentation the same JSON file mentioned [here](/api/openapi/v0.1.6).
 With a tool like Postman, you can check WaxAPI endpoints importing that specification.
