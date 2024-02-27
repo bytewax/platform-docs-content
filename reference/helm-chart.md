@@ -88,4 +88,3 @@ The following table shows the available configuration of the Bytewax Platform He
 | waxapi.service.type | string | `"ClusterIP"` |  |
 | waxapi.tolerations | list | `[]` |  |
 | waxapi.topologySpreadConstraints | list | `[]` |  |
-
