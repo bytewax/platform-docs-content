@@ -4,6 +4,7 @@ These setup instructions will help you prepare your environment before installin
 
 The Bytewax Platform works as an ecosystem made up of the following components:
 
+- Kubernetes cluster running version 1.22 or higher
 - Identity Provider implementing the OpenID Connect flow
 - External access network configured in your Kubernetes cluster (Ingress Controller, DNS server)
 - Default Storage Class in your Kubernetes cluster
