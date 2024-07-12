@@ -64,7 +64,7 @@ aws ecr get-login-password \
 Download the helm chart locally.
 
 ```bash
-helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/platform --version 0.1.6 
+helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/bytewax/platform --version 0.2.1 
 ```
 
 Extract the downloaded helm chart archive with the following command:
