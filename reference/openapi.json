@@ -13,7 +13,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "0.2.0"
+        "version": "0.4.0"
     },
     "paths": {
         "/dataflows": {
@@ -43,7 +43,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/views.DataflowList"
+                            "$ref": "#/definitions/k8s.DataflowList"
                         }
                     }
                 }
@@ -123,7 +123,7 @@
                     "200": {
                         "description": "ok",
                         "schema": {
-                            "$ref": "#/definitions/views.DataflowDetails"
+                            "$ref": "#/definitions/k8s.DataflowResponse"
                         }
                     }
                 }
@@ -300,36 +300,266 @@
                     }
                 }
             }
-        }
-    },
-    "definitions": {
-        "k8s.CloudBackup": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean"
-                },
-                "s3Url": {
-                    "type": "string"
+        },
+        "/namespaces": {
+            "get": {
+                "description": "get all namespaces",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get all namespaces",
+                "operationId": "get-all-namespaces",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.NamespaceList"
+                        }
+                    }
                 }
             }
         },
-        "k8s.Dataflow": {
+        "/secrets": {
+            "get": {
+                "description": "get all secrets",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get all secrets",
+                "operationId": "get-all-secrets",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.SecretList"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create secret",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create secret",
+                "operationId": "create-secret",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Secret Data",
+                        "name": "specs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/k8s.Secret"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/secrets/{secret_name}": {
+            "get": {
+                "description": "get secret by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get secret by name",
+                "operationId": "get-secret",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Secret Name",
+                        "name": "secret_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Include Values",
+                        "name": "include_values",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "$ref": "#/definitions/k8s.Secret"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update secret",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update secret",
+                "operationId": "update-secret",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Secret Name",
+                        "name": "secret_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Secret Data",
+                        "name": "specs",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/k8s.Secret"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete secret by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete secret by name",
+                "operationId": "delete-secret",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Secret Name",
+                        "name": "secret_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "gin.H": {
+            "type": "object",
+            "additionalProperties": {}
+        },
+        "k8s.DataflowList": {
             "type": "object",
             "properties": {
-                "containerImage": {
-                    "type": "string"
-                },
-                "containerImagePullPolicy": {
-                    "type": "string"
-                },
-                "containerImagePullSecret": {
-                    "type": "string"
-                },
+                "dataflows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/k8s.DataflowResponse"
+                    }
+                }
+            }
+        },
+        "k8s.DataflowResponse": {
+            "type": "object",
+            "properties": {
                 "creationTimestamp": {
                     "type": "string"
                 },
-                "kubernetesWorkloadType": {
+                "fileContent": {
+                    "type": "string"
+                },
+                "fileUrl": {
                     "type": "string"
                 },
                 "name": {
@@ -338,45 +568,56 @@
                 "namespace": {
                     "type": "string"
                 },
-                "platform": {
-                    "$ref": "#/definitions/k8s.Platform"
+                "spec": {
+                    "$ref": "#/definitions/v1alpha1.DataflowSpec"
                 },
-                "processes": {
+                "ui": {
+                    "$ref": "#/definitions/k8s.DataflowUI"
+                }
+            }
+        },
+        "k8s.DataflowUI": {
+            "type": "object",
+            "properties": {
+                "details": {
+                    "$ref": "#/definitions/gin.H"
+                },
+                "kind": {
                     "type": "string"
                 },
                 "processesReady": {
                     "type": "string"
                 },
-                "pythonScriptFile": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "workersPerProcess": {
+                "source": {
                     "type": "string"
                 }
             }
         },
-        "k8s.Platform": {
+        "k8s.Secret": {
             "type": "object",
             "properties": {
-                "recovery": {
-                    "$ref": "#/definitions/k8s.Recovery"
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/k8s.SecretPair"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
                 }
             }
         },
-        "k8s.Recovery": {
+        "k8s.SecretPair": {
             "type": "object",
             "properties": {
-                "cloudBackup": {
-                    "$ref": "#/definitions/k8s.CloudBackup"
+                "key": {
+                    "type": "string"
                 },
-                "enabled": {
-                    "type": "boolean"
-                },
-                "parts": {
-                    "type": "integer"
+                "value": {
+                    "type": "string"
                 }
             }
         },
@@ -400,6 +641,12 @@
                 },
                 "configMapName": {
                     "type": "string"
+                },
+                "dependencies": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "env": {
                     "type": "array",
@@ -528,17 +775,6 @@
                 }
             }
         },
-        "views.DataflowDetails": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "$ref": "#/definitions/k8s.Dataflow"
-                },
-                "details": {
-                    "type": "string"
-                }
-            }
-        },
         "views.DataflowDto": {
             "type": "object",
             "properties": {
@@ -559,13 +795,13 @@
                 }
             }
         },
-        "views.DataflowList": {
+        "views.NamespaceList": {
             "type": "object",
             "properties": {
-                "flows": {
+                "namespaces": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/k8s.Dataflow"
+                        "type": "string"
                     }
                 }
             }
@@ -577,6 +813,17 @@
                     "type": "array",
                     "items": {
                         "type": "string"
+                    }
+                }
+            }
+        },
+        "views.SecretList": {
+            "type": "object",
+            "properties": {
+                "secrets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/k8s.Secret"
                     }
                 }
             }
