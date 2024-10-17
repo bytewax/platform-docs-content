@@ -19,7 +19,7 @@ waxctl df deploy simple_slow.py \
 2. Show the state
 
 You can view the dataflow and the state object via the platform dashboard.
-[deployed dashboard](https://dashboard.lab.bytewax.io/)
+[deployed dashboard](https://dashboard.my-company.com/)
 
 3. Delete the dataflow
 
@@ -37,23 +37,23 @@ We can verify the dataflow has been deleted by a waxctl command or via the dashb
 waxctl df ls
 ```
 
-or [click](https://dashboard.lab.bytewax.io/) to visit the dashboard.
+or [click](https://dashboard.my-company.com/) to visit the dashboard.
 
-5. Change kubectl configuration to use the GKE cluster
+5. Change kubectl configuration to use the second cluster
 
 ```sh
-kubectl config use-context gke-01
+kubectl config use-context demo1
 ```
 
-6. Show that the dataflow `demo01` doesn't exist in the cluster
+6. Check that the dataflow `demo01` doesn't exist in the second cluster
 
 ```sh
 waxctl df ls -A
 ```
 
-https://dashboard.gke-01.bytewax.io/
+https://dashboard-other-cluster.my-company.com/
 
-7. Deploy the dataflow again
+7. Deploy the dataflow in the second cluster
 
 ```sh
 waxctl df deploy simple_slow.py \
@@ -67,4 +67,4 @@ waxctl df deploy simple_slow.py \
 
 8. Show the state again
 
-https://dashboard.gke-01.bytewax.io/
+https://dashboard-other-cluster.my-company.com/

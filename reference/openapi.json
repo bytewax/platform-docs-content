@@ -13,7 +13,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "0.4.0"
+        "version": "0.5.0"
     },
     "paths": {
         "/dataflows": {
@@ -214,6 +214,49 @@
                 }
             }
         },
+        "/dataflows/{dataflow_name}/jobs": {
+            "get": {
+                "description": "get scheduled dataflow jobs by name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get scheduled dataflow jobs by name",
+                "operationId": "get-dataflow-jobs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/views.JobList"
+                        }
+                    }
+                }
+            }
+        },
         "/dataflows/{dataflow_name}/logs": {
             "get": {
                 "description": "get dataflow logs by pod",
@@ -296,6 +339,52 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/views.PodList"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}/suspend": {
+            "put": {
+                "description": "suspend dataflow",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "suspend dataflow",
+                "operationId": "suspend-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Suspend Value",
+                        "name": "spec",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.SuspendDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -585,6 +674,9 @@
                 "kind": {
                     "type": "string"
                 },
+                "lastSchedule": {
+                    "type": "string"
+                },
                 "processesReady": {
                     "type": "string"
                 },
@@ -625,11 +717,16 @@
             "type": "object",
             "properties": {
                 "enabled": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "description": "Enables Cloud Backup feature\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
                     "type": "boolean"
                 },
                 "s3": {
-                    "$ref": "#/definitions/v1alpha1.S3"
+                    "description": "Cloud Backup S3 settings",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.S3"
+                        }
+                    ]
                 }
             }
         },
@@ -637,50 +734,77 @@
             "type": "object",
             "properties": {
                 "chartValues": {
+                    "description": "Advanced Bytewax helm chart values. See more at https://bytewax.github.io/helm-charts",
+                    "type": "string"
+                },
+                "concurrencyPolicy": {
+                    "description": "Specifies how to treat concurrent executions of a Scheduled Dataflow. Valid values are: - \"Allow\": allows Dataflows to run concurrently; - \"Forbid\": (default) forbids concurrent runs, skipping next run if previous run hasn't finished yet; - \"Replace\": cancels currently running Dataflow and replaces it with a new one\n+kubebuilder:validation:Optional",
                     "type": "string"
                 },
                 "configMapName": {
+                    "description": "Dataflow Configmap name",
                     "type": "string"
                 },
                 "dependencies": {
+                    "description": "Python dependencies needed to run the dataflow (use pip syntax, e.g. package-name==0.1.0)",
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
                 "env": {
+                    "description": "Environment variables to inject to dataflow container",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/v1alpha1.EnvVar"
                     }
                 },
                 "image": {
-                    "$ref": "#/definitions/v1alpha1.Image"
+                    "description": "Dataflow container image settings",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.Image"
+                        }
+                    ]
                 },
                 "jobMode": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "description": "Run a Job in Kubernetes instead of an Statefulset. Use this to batch processing\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
                     "type": "boolean"
                 },
                 "keepAlive": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "description": "Keep the Dataflow container alive after dataflow ends. It could be useful for troubleshooting purposes\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
                     "type": "boolean"
                 },
                 "processesCount": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "description": "Number of processes to run\n+kubebuilder:validation:Optional\n+kubebuilder:default=1",
                     "type": "integer"
                 },
                 "pythonFileName": {
+                    "description": "Python script file to run",
                     "type": "string"
                 },
                 "recovery": {
-                    "$ref": "#/definitions/v1alpha1.Recovery"
+                    "description": "Stores recovery files in Kubernetes persistent volumes to allow resuming after a restart (your dataflow must have recovery enabled: https://bytewax.io/docs/getting-started/recovery)",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.Recovery"
+                        }
+                    ]
+                },
+                "schedule": {
+                    "description": "Dataflow schedule in Cron format, see https://en.wikipedia.org/wiki/Cron\n+kubebuilder:validation:Optional",
+                    "type": "string"
+                },
+                "suspend": {
+                    "description": "Suspends the Dataflow execution. For Scheduled Dataflows, it will suspend subsequent executions, it does not apply to already started executions.\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "type": "boolean"
                 },
                 "tarName": {
-                    "description": "+kubebuilder:validation:Optional",
+                    "description": "Tar file name stored in the dataflow configmap\n+kubebuilder:validation:Optional",
                     "type": "string"
                 },
                 "workersPerProcess": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "description": "Number of workers to run in each process\n+kubebuilder:validation:Optional\n+kubebuilder:default=1",
                     "type": "integer"
                 }
             }
@@ -689,9 +813,11 @@
             "type": "object",
             "properties": {
                 "name": {
+                    "description": "Environment variable name",
                     "type": "string"
                 },
                 "value": {
+                    "description": "Environment variable value",
                     "type": "string"
                 }
             }
@@ -700,17 +826,19 @@
             "type": "object",
             "properties": {
                 "pullPolicy": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"Always\"",
+                    "description": "Container image pull policy (the value must be Always, IfNotPresent or Never)\n+kubebuilder:validation:Optional\n+kubebuilder:default=\"Always\"",
                     "type": "string"
                 },
                 "pullSecret": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"default-credentials\"",
+                    "description": "Kubernetes secret name to pull images\n+kubebuilder:validation:Optional\n+kubebuilder:default=\"default-credentials\"",
                     "type": "string"
                 },
                 "repository": {
+                    "description": "Container image repository URI",
                     "type": "string"
                 },
                 "tag": {
+                    "description": "Container image tag",
                     "type": "string"
                 }
             }
@@ -719,10 +847,11 @@
             "type": "object",
             "properties": {
                 "size": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=\"10Gi\"",
+                    "description": "Size of the persistent volume claim to be assign to each dataflow pod in Kubernetes\n+kubebuilder:validation:Optional\n+kubebuilder:default=\"10Gi\"",
                     "type": "string"
                 },
                 "storageClassName": {
+                    "description": "Storage class of the persistent volume claim to be assign to each dataflow pod in Kubernetes",
                     "type": "string"
                 }
             }
@@ -731,29 +860,39 @@
             "type": "object",
             "properties": {
                 "backupInterval": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "description": "System time duration in seconds to keep extra state snapshots around\n+kubebuilder:validation:Optional\n+kubebuilder:default=1",
                     "type": "integer"
                 },
                 "cloudBackup": {
-                    "$ref": "#/definitions/v1alpha1.CloudBackup"
+                    "description": "Back up worker state DBs to cloud storage",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.CloudBackup"
+                        }
+                    ]
                 },
                 "enabled": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "description": "Enable Dataflow recovery feature\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
                     "type": "boolean"
                 },
                 "partsCount": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "description": "Number of recovery partitions\n+kubebuilder:validation:Optional\n+kubebuilder:default=1",
                     "type": "integer"
                 },
                 "persistence": {
-                    "$ref": "#/definitions/v1alpha1.Persistence"
+                    "description": "Kubernetes Persistence settings",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.Persistence"
+                        }
+                    ]
                 },
                 "singleVolume": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=false",
+                    "description": "Use only one persistent volume for all dataflow's pods in Kubernetes\n+kubebuilder:validation:Optional\n+kubebuilder:default=false",
                     "type": "boolean"
                 },
                 "snapshotInterval": {
-                    "description": "+kubebuilder:validation:Optional\n+kubebuilder:default=1",
+                    "description": "System time duration in seconds to snapshot state for recovery\n+kubebuilder:validation:Optional\n+kubebuilder:default=1",
                     "type": "integer"
                 }
             }
@@ -762,15 +901,19 @@
             "type": "object",
             "properties": {
                 "accessKeyId": {
+                    "description": "AWS credentials access key id",
                     "type": "string"
                 },
                 "secretAccessKey": {
+                    "description": "AWS credentials secret access key",
                     "type": "string"
                 },
                 "secretName": {
+                    "description": "Name of the Kubernetes secret storing AWS credentials",
                     "type": "string"
                 },
                 "url": {
+                    "description": "S3 url to store state backups. For example, s3://mybucket/mydataflow-state-backups",
                     "type": "string"
                 }
             }
@@ -792,6 +935,40 @@
                 },
                 "spec": {
                     "$ref": "#/definitions/v1alpha1.DataflowSpec"
+                }
+            }
+        },
+        "views.JobDto": {
+            "type": "object",
+            "properties": {
+                "completionTime": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "ready": {
+                    "type": "integer"
+                },
+                "startTime": {
+                    "type": "string"
+                },
+                "succeded": {
+                    "type": "integer"
+                },
+                "terminating": {
+                    "type": "integer"
+                }
+            }
+        },
+        "views.JobList": {
+            "type": "object",
+            "properties": {
+                "jobs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/views.JobDto"
+                    }
                 }
             }
         },
@@ -825,6 +1002,20 @@
                     "items": {
                         "$ref": "#/definitions/k8s.Secret"
                     }
+                }
+            }
+        },
+        "views.SuspendDto": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "suspend": {
+                    "type": "boolean"
                 }
             }
         }

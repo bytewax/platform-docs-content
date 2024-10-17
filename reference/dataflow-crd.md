@@ -87,42 +87,56 @@ DataflowSpec defines the desired state of Dataflow
         <td><b><a href="#dataflowspecimage">image</a></b></td>
         <td>object</td>
         <td>
-          <br/>
+          Dataflow container image settings<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>pythonFileName</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Python script file to run<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>chartValues</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Advanced Bytewax helm chart values. See more at https://bytewax.github.io/helm-charts<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>concurrencyPolicy</b></td>
+        <td>string</td>
+        <td>
+          Specifies how to treat concurrent executions of a Scheduled Dataflow. Valid values are: - "Allow": allows Dataflows to run concurrently; - "Forbid": (default) forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running Dataflow and replaces it with a new one<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>configMapName</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Dataflow Configmap name<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>dependencies</b></td>
+        <td>[]string</td>
+        <td>
+          Python dependencies needed to run the dataflow (use pip syntax, e.g. package-name==0.1.0)<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b><a href="#dataflowspecenvindex">env</a></b></td>
         <td>[]object</td>
         <td>
-          <br/>
+          Environment variables to inject to dataflow container<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>jobMode</b></td>
         <td>boolean</td>
         <td>
-          <br/>
+          Run a Job in Kubernetes instead of an Statefulset. Use this to batch processing<br/>
           <br/>
             <i>Default</i>: false<br/>
         </td>
@@ -131,7 +145,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>keepAlive</b></td>
         <td>boolean</td>
         <td>
-          <br/>
+          Keep the Dataflow container alive after dataflow ends. It could be useful for troubleshooting purposes<br/>
           <br/>
             <i>Default</i>: false<br/>
         </td>
@@ -140,7 +154,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>processesCount</b></td>
         <td>integer</td>
         <td>
-          <br/>
+          Number of processes to run<br/>
           <br/>
             <i>Default</i>: 1<br/>
         </td>
@@ -149,21 +163,37 @@ DataflowSpec defines the desired state of Dataflow
         <td><b><a href="#dataflowspecrecovery">recovery</a></b></td>
         <td>object</td>
         <td>
+          Stores recovery files in Kubernetes persistent volumes to allow resuming after a restart (your dataflow must have recovery enabled: https://bytewax.io/docs/getting-started/recovery)<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>schedule</b></td>
+        <td>string</td>
+        <td>
+          Dataflow schedule in Cron format, see https://en.wikipedia.org/wiki/Cron<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>suspend</b></td>
+        <td>boolean</td>
+        <td>
+          Suspends the Dataflow execution. For Scheduled Dataflows, it will suspend subsequent executions, it does not apply to already started executions.<br/>
           <br/>
+            <i>Default</i>: false<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>tarName</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Tar file name stored in the dataflow configmap<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>workersPerProcess</b></td>
         <td>integer</td>
         <td>
-          <br/>
+          Number of workers to run in each process<br/>
           <br/>
             <i>Default</i>: 1<br/>
         </td>
@@ -177,7 +207,7 @@ DataflowSpec defines the desired state of Dataflow
 
 
 
-
+Dataflow container image settings
 
 <table>
     <thead>
@@ -192,14 +222,14 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>tag</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Container image tag<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>pullPolicy</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Container image pull policy (the value must be Always, IfNotPresent or Never)<br/>
           <br/>
             <i>Default</i>: Always<br/>
         </td>
@@ -208,7 +238,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>pullSecret</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Kubernetes secret name to pull images<br/>
           <br/>
             <i>Default</i>: default-credentials<br/>
         </td>
@@ -217,7 +247,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>repository</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Container image repository URI<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -244,14 +274,14 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>name</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Environment variable name<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>value</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Environment variable value<br/>
         </td>
         <td>true</td>
       </tr></tbody>
@@ -263,7 +293,7 @@ DataflowSpec defines the desired state of Dataflow
 
 
 
-
+Stores recovery files in Kubernetes persistent volumes to allow resuming after a restart (your dataflow must have recovery enabled: https://bytewax.io/docs/getting-started/recovery)
 
 <table>
     <thead>
@@ -275,17 +305,26 @@ DataflowSpec defines the desired state of Dataflow
         </tr>
     </thead>
     <tbody><tr>
+        <td><b>backupInterval</b></td>
+        <td>integer</td>
+        <td>
+          System time duration in seconds to keep extra state snapshots around<br/>
+          <br/>
+            <i>Default</i>: 1<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b><a href="#dataflowspecrecoverycloudbackup">cloudBackup</a></b></td>
         <td>object</td>
         <td>
-          <br/>
+          Back up worker state DBs to cloud storage<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>enabled</b></td>
         <td>boolean</td>
         <td>
-          <br/>
+          Enable Dataflow recovery feature<br/>
           <br/>
             <i>Default</i>: false<br/>
         </td>
@@ -294,7 +333,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>partsCount</b></td>
         <td>integer</td>
         <td>
-          <br/>
+          Number of recovery partitions<br/>
           <br/>
             <i>Default</i>: 1<br/>
         </td>
@@ -303,16 +342,25 @@ DataflowSpec defines the desired state of Dataflow
         <td><b><a href="#dataflowspecrecoverypersistence">persistence</a></b></td>
         <td>object</td>
         <td>
-          <br/>
+          Kubernetes Persistence settings<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>singleVolume</b></td>
         <td>boolean</td>
         <td>
-          <br/>
+          Use only one persistent volume for all dataflow's pods in Kubernetes<br/>
           <br/>
             <i>Default</i>: false<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>snapshotInterval</b></td>
+        <td>integer</td>
+        <td>
+          System time duration in seconds to snapshot state for recovery<br/>
+          <br/>
+            <i>Default</i>: 1<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -324,7 +372,7 @@ DataflowSpec defines the desired state of Dataflow
 
 
 
-
+Back up worker state DBs to cloud storage
 
 <table>
     <thead>
@@ -339,7 +387,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>enabled</b></td>
         <td>boolean</td>
         <td>
-          <br/>
+          Enables Cloud Backup feature<br/>
           <br/>
             <i>Default</i>: false<br/>
         </td>
@@ -348,7 +396,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b><a href="#dataflowspecrecoverycloudbackups3">s3</a></b></td>
         <td>object</td>
         <td>
-          <br/>
+          Cloud Backup S3 settings<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -360,7 +408,7 @@ DataflowSpec defines the desired state of Dataflow
 
 
 
-
+Cloud Backup S3 settings
 
 <table>
     <thead>
@@ -375,28 +423,28 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>url</b></td>
         <td>string</td>
         <td>
-          <br/>
+          S3 url to store state backups. For example, s3://mybucket/mydataflow-state-backups<br/>
         </td>
         <td>true</td>
       </tr><tr>
         <td><b>accessKeyId</b></td>
         <td>string</td>
         <td>
-          <br/>
+          AWS credentials access key id<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>secretAccessKey</b></td>
         <td>string</td>
         <td>
-          <br/>
+          AWS credentials secret access key<br/>
         </td>
         <td>false</td>
       </tr><tr>
         <td><b>secretName</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Name of the Kubernetes secret storing AWS credentials<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -408,7 +456,7 @@ DataflowSpec defines the desired state of Dataflow
 
 
 
-
+Kubernetes Persistence settings
 
 <table>
     <thead>
@@ -423,7 +471,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>size</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Size of the persistent volume claim to be assign to each dataflow pod in Kubernetes<br/>
           <br/>
             <i>Default</i>: 10Gi<br/>
         </td>
@@ -432,7 +480,7 @@ DataflowSpec defines the desired state of Dataflow
         <td><b>storageClassName</b></td>
         <td>string</td>
         <td>
-          <br/>
+          Storage class of the persistent volume claim to be assign to each dataflow pod in Kubernetes<br/>
         </td>
         <td>false</td>
       </tr></tbody>
