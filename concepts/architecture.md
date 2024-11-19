@@ -11,7 +11,7 @@ The Operator is a core component running in the Kubernetes cluster. It implement
 
 ```mermaid
 graph LR;
-  client([user])-. CRUD Dataflows<br>using waxctl or dashboard .->ingress[Dataflow CR];
+  client([user])-. CRUD Dataflows<br>using waxctl, waxapi or dashboard .->ingress[Dataflow CR];
   ingress-->|events|service[Bytewax<br>Platform];
   subgraph Kubernetes cluster
   ingress;
