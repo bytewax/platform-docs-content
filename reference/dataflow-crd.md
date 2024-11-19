@@ -98,6 +98,13 @@ DataflowSpec defines the desired state of Dataflow
         </td>
         <td>true</td>
       </tr><tr>
+        <td><b><a href="#dataflowspecartifactsdownload">artifactsDownload</a></b></td>
+        <td>object</td>
+        <td>
+          Downloads a tar file from a URL. It could be a public URL or a private GitHub repository<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
         <td><b>chartValues</b></td>
         <td>string</td>
         <td>
@@ -248,6 +255,47 @@ Dataflow container image settings
         <td>string</td>
         <td>
           Container image repository URI<br/>
+        </td>
+        <td>false</td>
+      </tr></tbody>
+</table>
+
+
+### Dataflow.spec.artifactsDownload
+<sup><sup>[↩ Parent](#dataflowspec)</sup></sup>
+
+
+
+Downloads a tar file from a URL. It could be a public URL or a private GitHub repository
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody><tr>
+        <td><b>url</b></td>
+        <td>string</td>
+        <td>
+          Url of the tar file to download<br/>
+        </td>
+        <td>true</td>
+      </tr><tr>
+        <td><b>secretName</b></td>
+        <td>string</td>
+        <td>
+          Name of the Kubernetes secret storing Personal Access Token. It must contain the key TOKEN<br/>
+        </td>
+        <td>false</td>
+      </tr><tr>
+        <td><b>token</b></td>
+        <td>string</td>
+        <td>
+          Personal Access Token<br/>
         </td>
         <td>false</td>
       </tr></tbody>
@@ -444,7 +492,7 @@ Cloud Backup S3 settings
         <td><b>secretName</b></td>
         <td>string</td>
         <td>
-          Name of the Kubernetes secret storing AWS credentials<br/>
+          Name of the Kubernetes Secret that stores AWS credentials. It must contain the keys LITESTREAM_ACCESS_KEY_ID and LITESTREAM_SECRET_ACCESS_KEY<br/>
         </td>
         <td>false</td>
       </tr></tbody>

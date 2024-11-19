@@ -13,7 +13,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "0.5.0"
+        "version": "0.7.0"
     },
     "paths": {
         "/dataflows": {
@@ -339,6 +339,52 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/views.PodList"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}/reset-state": {
+            "put": {
+                "description": "reset dataflow recovery state",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "reset dataflow recovery state",
+                "operationId": "reset-dataflow",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reset State Value",
+                        "name": "spec",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/views.ResetStateDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -713,6 +759,23 @@
                 }
             }
         },
+        "v1alpha1.ArtifactsDownload": {
+            "type": "object",
+            "properties": {
+                "secretName": {
+                    "description": "Name of the Kubernetes secret storing Personal Access Token. It must contain the key TOKEN\n+kubebuilder:validation:Optional",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "Personal Access Token\n+kubebuilder:validation:Optional",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Url of the tar file to download",
+                    "type": "string"
+                }
+            }
+        },
         "v1alpha1.CloudBackup": {
             "type": "object",
             "properties": {
@@ -733,6 +796,14 @@
         "v1alpha1.DataflowSpec": {
             "type": "object",
             "properties": {
+                "artifactsDownload": {
+                    "description": "Downloads a tar file from a URL. It could be a public URL or a private GitHub repository\n+kubebuilder:validation:Optional",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/v1alpha1.ArtifactsDownload"
+                        }
+                    ]
+                },
                 "chartValues": {
                     "description": "Advanced Bytewax helm chart values. See more at https://bytewax.github.io/helm-charts",
                     "type": "string"
@@ -909,7 +980,7 @@
                     "type": "string"
                 },
                 "secretName": {
-                    "description": "Name of the Kubernetes secret storing AWS credentials",
+                    "description": "Name of the Kubernetes Secret that stores AWS credentials. It must contain the keys LITESTREAM_ACCESS_KEY_ID and LITESTREAM_SECRET_ACCESS_KEY",
                     "type": "string"
                 },
                 "url": {
@@ -991,6 +1062,20 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "views.ResetStateDto": {
+            "type": "object",
+            "properties": {
+                "force": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
                 }
             }
         },
