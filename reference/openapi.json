@@ -13,7 +13,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "0.7.0"
+        "version": "0.8.1"
     },
     "paths": {
         "/dataflows": {
@@ -289,6 +289,80 @@
                         "name": "pod_name",
                         "in": "query",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/dataflows/{dataflow_name}/logsv2": {
+            "get": {
+                "description": "get dataflow logs by pod",
+                "summary": "get dataflow logs by pod",
+                "operationId": "get-dataflow-logs-v2",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authentication header",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dataflow Name",
+                        "name": "dataflow_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Namespace",
+                        "name": "namespace",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Pod Name",
+                        "name": "pod_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start time for fetching logs (RFC3339 format)",
+                        "name": "since_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Fetch logs from this many seconds ago",
+                        "name": "since_seconds",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Fetch logs from previous container instance if it exists",
+                        "name": "previous",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of lines from the end of the logs to fetch",
+                        "name": "tail_lines",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Maximum number of bytes to fetch",
+                        "name": "limit_bytes",
+                        "in": "query"
                     }
                 ],
                 "responses": {
